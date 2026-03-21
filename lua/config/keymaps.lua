@@ -15,12 +15,6 @@ vim.keymap.set("i", "<M-Delete>", "<C-o>dw", opts) -- delete word after cursor
 -- jj -> escape insert mode
 vim.keymap.set("i", "jj", "<Esc>", opts)
 
--- Use the black hole register for delete and change operations, to avoid overwriting system clipboard
-vim.keymap.set({ "n", "v" }, "d", '"_d', { noremap = true })
-vim.keymap.set("n", "dd", '"_dd', { noremap = true })
-vim.keymap.set({ "n", "v" }, "x", '"_x', { noremap = true })
-vim.keymap.set({ "n", "v" }, "c", '"_c', { noremap = true })
-
 -- Use 'm' as an explicit "cut" (saves to unnamed register, ready to paste with p)
 vim.keymap.set({ "n", "v" }, "m", "d", { noremap = true })
 vim.keymap.set("n", "mm", "dd", { noremap = true })
