@@ -15,6 +15,24 @@ vim.keymap.set("i", "<M-Delete>", "<C-o>dw", opts) -- delete word after cursor
 -- jj -> escape insert mode
 vim.keymap.set("i", "jj", "<Esc>", opts)
 
--- Use 'm' as an explicit "cut" (saves to unnamed register, ready to paste with p)
-vim.keymap.set({ "n", "v" }, "m", "d", { noremap = true })
-vim.keymap.set("n", "mm", "dd", { noremap = true })
+-- handle j/k in vscode neovim extension to move by visual lines when no count is provided
+if vim.g.vscode then
+  vim.keymap.set("n", "j", function()
+    if vim.v.count == 0 then
+      vim.fn.VSCodeCall("cursorDown")
+    else
+      vim.api.nvim_feedkeys(vim.v.count .. "j", "n", false)
+    end
+  end)
+  vim.keymap.set("n", "k", function()
+    if vim.v.count == 0 then
+      vim.fn.VSCodeCall("cursorUp")
+    else
+      vim.api.nvim_feedkeys(vim.v.count .. "k", "n", false)
+    end
+  end)
+end
+
+-- Shift + scroll to scroll horizontally
+vim.keymap.set("n", "<S-ScrollWheelUp>", "zH")
+vim.keymap.set("n", "<S-ScrollWheelDown>", "zL")
