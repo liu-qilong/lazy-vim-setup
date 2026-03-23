@@ -36,3 +36,7 @@ end
 -- Shift + scroll to scroll horizontally
 vim.keymap.set("n", "<S-ScrollWheelUp>", "zH")
 vim.keymap.set("n", "<S-ScrollWheelDown>", "zL")
+
+-- We disable the default clipboard override in options.lua. But we enable it for yanking
+vim.keymap.set({ "n", "v" }, "y", '"+y')
+vim.keymap.set("n", "Y", '"+Y')
