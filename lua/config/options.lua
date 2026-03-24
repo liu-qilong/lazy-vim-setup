@@ -5,6 +5,9 @@
 -- Enable line wrapping
 vim.opt.wrap = true
 
+-- Allow moving the cursor to the next/previous line when navigating with h / l / left / right
+vim.opt.whichwrap:append("h,l,[,]")
+
 -- disable system clipboard override
 vim.opt.clipboard = ""
 

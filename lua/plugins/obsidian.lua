@@ -33,5 +33,6 @@ return {
       -- Trigger completion at 2 chars.
       min_chars = 0,
     },
+    disable_frontmatter = true,
   },
 }

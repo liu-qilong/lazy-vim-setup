@@ -6,8 +6,10 @@ return {
     init = function()
       -- vim.g.* settings must go in `init`, not `config`
       vim.g.VM_maps = {
-        ["Find Under"] = "<C-n>", -- default: start multicursor on word
+        ["Find Under"] = "<C-n>",
         ["Find Subword Under"] = "<C-n>",
+        ["Select Cursor Down"] = "<M-Down>",
+        ["Select Cursor Up"] = "<M-Up>",
       }
     end,
   },
