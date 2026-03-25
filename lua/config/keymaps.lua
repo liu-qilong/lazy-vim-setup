@@ -15,24 +15,6 @@ vim.keymap.set("i", "<M-Delete>", "<C-o>dw", opts) -- delete word after cursor
 -- jj -> escape insert mode
 vim.keymap.set("i", "jj", "<Esc>", opts)
 
--- handle j/k in vscode neovim extension to move by visual lines when no count is provided
-if vim.g.vscode then
-  vim.keymap.set("n", "j", function()
-    if vim.v.count == 0 then
-      vim.fn.VSCodeCall("cursorDown")
-    else
-      vim.api.nvim_feedkeys(vim.v.count .. "j", "n", false)
-    end
-  end)
-  vim.keymap.set("n", "k", function()
-    if vim.v.count == 0 then
-      vim.fn.VSCodeCall("cursorUp")
-    else
-      vim.api.nvim_feedkeys(vim.v.count .. "k", "n", false)
-    end
-  end)
-end
-
 -- Shift + scroll to scroll horizontally
 vim.keymap.set("n", "<S-ScrollWheelUp>", "zH")
 vim.keymap.set("n", "<S-ScrollWheelDown>", "zL")
@@ -40,3 +22,99 @@ vim.keymap.set("n", "<S-ScrollWheelDown>", "zL")
 -- We disable the default clipboard override in options.lua. But we enable it for yanking
 vim.keymap.set({ "n", "v" }, "y", '"+y')
 vim.keymap.set("n", "Y", '"+Y')
+
+-- vscode specific keybindings
+if vim.g.vscode then
+  local opts = { silent = true }
+
+  -- handle j/k in vscode neovim extension to move by visual lines when no count is provided
+  vim.keymap.set("n", "j", function()
+    if vim.v.count == 0 then
+      vim.fn.VSCodeCall("cursorDown")
+    else
+      vim.api.nvim_feedkeys(vim.v.count .. "j", "n", false)
+    end
+  end)
+
+  vim.keymap.set("n", "k", function()
+    if vim.v.count == 0 then
+      vim.fn.VSCodeCall("cursorUp")
+    else
+      vim.api.nvim_feedkeys(vim.v.count .. "k", "n", false)
+    end
+  end)
+
+  -- files
+  vim.keymap.set("n", "<leader>e", function()
+    vim.fn.VSCodeNotify("workbench.view.explorer")
+  end, opts)
+
+  vim.keymap.set("n", "<leader>ff", function()
+    vim.fn.VSCodeNotify("workbench.action.quickOpen")
+  end, opts)
+
+  vim.keymap.set("n", "<leader>fr", function()
+    vim.fn.VSCodeNotify("workbench.action.quickOpen")
+  end, opts)
+
+  vim.keymap.set("n", "<leader><leader>", function()
+    vim.fn.VSCodeNotify("workbench.action.quickOpen")
+  end, opts)
+
+  -- buffers
+  vim.keymap.set("n", "<leader>,", function()
+    vim.fn.VSCodeNotify("workbench.action.showAllEditors")
+  end, opts)
+
+  vim.keymap.set("n", "<leader>bd", function()
+    vim.fn.VSCodeNotify("workbench.action.closeActiveEditor")
+  end, opts)
+
+  -- windows
+  vim.keymap.set("n", "<leader>wq", function()
+    vim.fn.VSCodeNotify("workbench.action.closeGroup")
+  end, opts)
+
+  -- LSP
+  vim.keymap.set("n", "gO", function() -- symbol outline (Cmd+P then @)
+    vim.fn.VSCodeNotify("workbench.action.gotoSymbol")
+  end, opts)
+
+  vim.keymap.set("n", "[d", function() -- diagnostics (problems)
+    vim.fn.VSCodeNotify("editor.action.marker.prevInFiles")
+  end, opts)
+
+  vim.keymap.set("n", "]d", function() -- diagnostics (problems)
+    vim.fn.VSCodeNotify("editor.action.marker.nextInFiles")
+  end, opts)
+
+  vim.keymap.set("n", "cr", function() -- rename symbol
+    vim.fn.VSCodeNotify("editor.action.rename")
+  end, opts)
+
+  -- git
+  vim.keymap.set("n", "<leader>gs", function()
+    vim.fn.VSCodeNotify("workbench.view.scm")
+  end, opts)
+
+  vim.keymap.set("n", "<leader>gd", function()
+    vim.fn.VSCodeNotify("workbench.view.scm")
+  end, opts)
+
+  vim.keymap.set("n", "<leader>hs", function() -- stage hunk
+    vim.fn.VSCodeNotify("git.stageSelectedRanges")
+  end, opts)
+
+  vim.keymap.set("n", "<leader>hu", function() -- unstage hunk
+    vim.fn.VSCodeNotify("git.unstageSelectedRanges")
+  end, opts)
+
+  vim.keymap.set("n", "<leader>hr", function() -- revert hunk
+    vim.fn.VSCodeNotify("git.revertSelectedRanges")
+  end, opts)
+
+  -- terminal
+  vim.keymap.set("n", "<leader>ft", function()
+    vim.fn.VSCodeNotify("workbench.action.terminal.toggleTerminal")
+  end, opts)
+end
