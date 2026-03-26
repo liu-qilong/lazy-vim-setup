@@ -76,8 +76,16 @@ if vim.g.vscode then
   end, opts)
 
   -- LSP
+  vim.keymap.set("n", "<leader>o", function() -- focus on outline view
+    vim.fn.VSCodeNotify("outline.focus")
+  end, opts)
+
   vim.keymap.set("n", "gO", function() -- symbol outline (Cmd+P then @)
     vim.fn.VSCodeNotify("workbench.action.gotoSymbol")
+  end, opts)
+
+  vim.keymap.set("n", "gr", function() -- search references
+    vim.fn.VSCodeNotify("editor.action.referenceSearch.trigger")
   end, opts)
 
   vim.keymap.set("n", "[d", function() -- diagnostics (problems)
@@ -94,15 +102,24 @@ if vim.g.vscode then
 
   -- git
   vim.keymap.set("n", "<leader>gs", function()
-    vim.fn.VSCodeNotify("workbench.view.scm")
+    vim.fn.VSCodeNotify("workbench.view.scm") -- focus on the commit message box
+  end, opts)
+
+  vim.keymap.set("n", "<leader>gg", function()
+    vim.fn.VSCodeNotify("workbench.view.scm") -- focus on the commit message box
   end, opts)
 
   vim.keymap.set("n", "<leader>gd", function()
-    vim.fn.VSCodeNotify("workbench.view.scm")
+    local vscode = require("vscode")
+    vscode.call("workbench.scm.focus")
+    vscode.call("list.focusFirst")
+    -- skips two items and land on the fisrt file
+    vscode.call("list.focusDown")
+    vscode.call("list.focusDown")
   end, opts)
 
   vim.keymap.set("n", "<leader>hs", function() -- stage hunk
-    vim.fn.VSCodeNotify("git.stageSelectedRanges")
+    vim.fn.VSCodeNotify("git.diff.stageHunk")
   end, opts)
 
   vim.keymap.set("n", "<leader>hu", function() -- unstage hunk
@@ -111,10 +128,5 @@ if vim.g.vscode then
 
   vim.keymap.set("n", "<leader>hr", function() -- revert hunk
     vim.fn.VSCodeNotify("git.revertSelectedRanges")
-  end, opts)
-
-  -- terminal
-  vim.keymap.set("n", "<leader>ft", function()
-    vim.fn.VSCodeNotify("workbench.action.terminal.toggleTerminal")
   end, opts)
 end
