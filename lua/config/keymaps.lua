@@ -129,4 +129,30 @@ if vim.g.vscode then
   vim.keymap.set("n", "<leader>hr", function() -- revert hunk
     vim.fn.VSCodeNotify("git.revertSelectedRanges")
   end, opts)
+
+  -- = command setup
+  -- https://github.com/vscode-neovim/vscode-neovim/issues/1425
+  local vscode = require("vscode")
+
+  local function format_range(line1, line2)
+    vscode.call("editor.action.formatSelection", {
+      range = { line1 - 1, 0, line2, 0 },
+    })
+  end
+
+  vim.keymap.set("n", "=", function() -- = as a motion operator (e.g. =ap, gg=G)
+    vim.o.operatorfunc = "v:lua._vscode_format_op"
+    _G._vscode_format_op = function()
+      format_range(vim.fn.line("'["), vim.fn.line("']"))
+    end
+    return "g@"
+  end, { expr = true, desc = "Format (VSCode)" })
+
+  vim.keymap.set("n", "==", function() -- == formats the current line
+    format_range(vim.fn.line("."), vim.fn.line("."))
+  end, { desc = "Format line (VSCode)" })
+
+  vim.keymap.set("x", "=", function() -- = in visual mode
+    format_range(vim.fn.line("v"), vim.fn.line("."))
+  end, { desc = "Format selection (VSCode)" })
 end
