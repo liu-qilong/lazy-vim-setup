@@ -1,0 +1,7 @@
+{
+  "Insert Date": {
+    "prefix": "date",
+    "body": "${CURRENT_DATE} ${CURRENT_MONTH_NAME} ${CURRENT_YEAR}",
+    "description": "Insert date as DD Month YYYY"
+  }
+}

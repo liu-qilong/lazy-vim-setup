@@ -100,6 +100,11 @@ if vim.g.vscode then
     vim.fn.VSCodeNotify("editor.action.rename")
   end, opts)
 
+  -- search panel
+  vim.keymap.set("n", "<leader>sG", function()
+    vim.fn.VSCodeNotify("workbench.view.search") -- focus on the commit message box
+  end, opts)
+
   -- git
   vim.keymap.set("n", "<leader>gs", function()
     vim.fn.VSCodeNotify("workbench.view.scm") -- focus on the commit message box
