@@ -5,10 +5,8 @@
 local opts = { noremap = true, silent = true }
 
 -- Opt+← / Opt+→ -> jump by word
-vim.keymap.set("i", "<M-b>", "<C-Left>", opts) -- works for iterm2
-vim.keymap.set("i", "<M-f>", "<C-Right>", opts) -- works for iterm2
-vim.keymap.set("i", "<M-Right>", "<C-o>w", { desc = "Move word forward" }) -- works for warp & alacritty
-vim.keymap.set("i", "<M-Right>", "<C-o>w", { desc = "Move word forward" }) -- works for warp & alacritty
+vim.keymap.set("i", "<M-b>", "<C-Left>", opts)
+vim.keymap.set("i", "<M-f>", "<C-Right>", opts)
 
 -- Opt+Delete / Opt+Backspace -> delete word
 vim.keymap.set("i", "<M-BS>", "<C-w>", opts) -- delete word before cursor
